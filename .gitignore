@@ -1,0 +1,19 @@
+# Default-deny: this repo publishes only the generic data-pipeline/notification
+# tooling. The trading model, feature engineering, backtests, and research notes
+# are intentionally excluded (that's the whole point of this list) so a file
+# added later isn't accidentally published just because it wasn't gitignored.
+*
+
+!.gitignore
+!README.md
+!requirements.txt
+!run_daily.sh
+!config.py.example
+!notify.py
+!dbutil.py
+!morning_report.py
+!download_finra.py
+!ingest.py
+!ingest_benchmarks.py
+!ingest_prices_daily.py
+!ingest_fundamentals_daily.py

@@ -1,0 +1,12 @@
+pandas
+plotly
+duckdb
+httpx
+pydantic
+pydantic-settings
+python-dotenv
+scikit-learn>=1.4.0
+xgboost>=2.0.0
+shap
+yfinance
+mcp==1.9.2

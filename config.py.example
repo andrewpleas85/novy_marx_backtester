@@ -1,0 +1,38 @@
+"""Copy this file to config.py and fill in your own values. config.py is gitignored
+so your real API keys and strategy thresholds never get committed.
+
+This repo only publishes the generic data-pipeline / notification tooling, so the
+settings below are a minimal template, not the actual thresholds this instance runs."""
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    FMP_API_KEY: str = "YOUR_FMP_API_KEY_HERE"
+
+    # DB bifurcation: history holds immutable market/fundamental data; live_state holds
+    # mutable paper/live-trading tables. See dbutil.connect_live().
+    DUCKDB_PATH: str = "history.duckdb"
+    LIVE_DB_PATH: str = "live_state.duckdb"
+
+    # Abort an ingest run if FMP returns live prices for less than this fraction of the
+    # requested tickers — better to skip a day than act on a half-populated fetch.
+    MIN_QUOTE_COVERAGE: float = 0.50
+
+    # Exit/notification thresholds used by notify.py and morning_report.py.
+    # Set these to whatever your own strategy actually uses.
+    WIN_THRESHOLD: float = 0.15
+    FORWARD_RETURN_DAYS: int = 60
+    STOP_LOSS_PCT: float = 0.20
+    BUY_GATE_SCORE: float = 0.50
+
+    # Discord incoming-webhook URL for alerts (set in .env; empty = notifications off).
+    DISCORD_WEBHOOK_URL: str = ""
+    DISCORD_USER_ID: str = ""   # numeric Discord user id; if set, messages @-mention you
+
+    # SEC EDGAR / ClinicalTrials.gov require (or appreciate) a real contact string.
+    SEC_USER_AGENT: str = "your-app-name you@example.com"
+
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+
+settings = Settings()
